@@ -1,7 +1,19 @@
-build_test:
-  stage: build
+FreeBSD:
+  tags:
+    - FreeBSD
   script:
     - if [ -d build ]; then rm -rf build ; fi
     - mkdir build
     - cd build ; cmake generate -G Ninja .. ; ninja all basecode-configured
+    - cd tests ; ./tests.sh
+docker-ubuntu-18-04-bionic:
+  tags:
+    - docker
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq autotools-dev build-essential cmake debhelper dh-autoreconf file libevent-dev libmsgpack-dev libncurses5-dev libssh-dev libssl-dev libutempter-dev pkg-config zlib1g-dev
+  image: ubuntu:bionic
+  script:
+    - if [ -d build ]; then rm -rf build ; fi
+    - mkdir build
+    - cd build ; cmake3 generate -G Ninja .. ; ninja all basecode-configured
     - cd tests ; ./tests.sh
