@@ -6,12 +6,12 @@ FreeBSD:
     - mkdir build
     - cd build ; cmake generate -G Ninja .. ; ninja all basecode-configured
     - cd tests ; ./tests.sh
-docker-ubuntu-16-04-xenial:
+docker-debian-10-buster:
   tags:
     - docker
   before_script:
     - apt-get update -qq && apt-get install -y -qq build-essential cmake ninja-build
-  image: ubuntu:xenial
+  image: debian:buster
   script:
     - if [ -d build ]; then rm -rf build ; fi
     - mkdir build
